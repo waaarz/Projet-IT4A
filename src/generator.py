@@ -55,13 +55,22 @@ def generate_and_save(n, out_dir="data", prefix="inst", seed=None, bbox=(0,100))
     return coords
 
 if __name__ == "__main__":
-    sizes = [6, 10, 14, 18, 25]  # toutes les tailles que tu veux
-    instances_per_size = 5        # nombre d’instances par taille
+    categories = {
+        "test": [6, 8, 10],
+        "petite": [12, 14, 15],
+        "moyenne": [16, 18, 20],
+        "grande": [20, 25, 30, 40]
+    }
 
-    for n in sizes:
-        for s in range(instances_per_size):
-            seed = 1000 + n*10 + s  # générer des seeds différentes
-            generate_and_save(n, out_dir="data", prefix="inst", seed=seed)
-
+    for cat, sizes in categories.items():
+        for n in sizes:
+            for s in range(5):  # 5 instances par taille
+                generate_and_save(
+                    n,
+                    out_dir=f"data/{cat}",
+                    prefix=f"{cat}_inst",
+                    seed=1000 + n*10 + s
+                )
     print("Toutes les instances ont été générées dans ./data/")
+
 
